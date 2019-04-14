@@ -1,0 +1,62 @@
+{
+    "project": "hashCodeLegend",
+    "comments": {
+        "demos/src/main/java/com/ObjectMemoryDump.java": [
+            {
+                "line": 16,
+                "notes": [
+                    {
+                        "author": "me",
+                        "comment": "simple comment",
+                        "timestamp": {
+                            "nanos": 87000000,
+                            "seconds": 1555233838
+                        }
+                    }
+                ],
+                "resolved": false,
+                "revision": "6d3080cf1db4e719dff36b39c2af5b3958ecf48e"
+            }
+        ],
+        "demos/src/main/java/com/ObjectReallocation.java": [
+            {
+                "line": 24,
+                "notes": [
+                    {
+                        "author": "me",
+                        "comment": "xxx",
+                        "timestamp": {
+                            "nanos": 437000000,
+                            "seconds": 1555230334
+                        }
+                    },
+                    {
+                        "author": "me",
+                        "comment": "xxx2",
+                        "timestamp": {
+                            "nanos": 773000000,
+                            "seconds": 1555230382
+                        }
+                    }
+                ],
+                "resolved": false,
+                "revision": "6d3080cf1db4e719dff36b39c2af5b3958ecf48e"
+            },
+            {
+                "line": 30,
+                "notes": [
+                    {
+                        "author": "me",
+                        "comment": "wtf",
+                        "timestamp": {
+                            "nanos": 443000000,
+                            "seconds": 1555230386
+                        }
+                    }
+                ],
+                "resolved": false,
+                "revision": "6d3080cf1db4e719dff36b39c2af5b3958ecf48e"
+            }
+        ]
+    }
+}
