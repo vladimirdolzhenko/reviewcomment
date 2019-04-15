@@ -28,8 +28,6 @@ public class EditCommentDialog extends DialogWrapper {
         myNote = note;
         myConsumer = c -> {
             consumer.consume(c);
-            // is there any way to recalculate gutter items ?
-            //DaemonCodeAnalyzer.getInstance(project).restart(psiFile);
         };
         myComment = comment;
         myPanel.setNote(note);

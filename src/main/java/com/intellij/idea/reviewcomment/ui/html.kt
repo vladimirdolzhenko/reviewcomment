@@ -1,10 +1,9 @@
 package com.intellij.idea.reviewcomment.ui
 
-import java.util.ArrayList
 
 open class Tag(val name: String) {
-    val children: MutableList<Tag> = ArrayList()
-    val attributes: MutableList<Attribute> = ArrayList()
+    val children: MutableList<Tag> = mutableListOf()
+    val attributes: MutableList<Attribute> = mutableListOf()
 
     override fun toString(): String {
         return "<$name" +

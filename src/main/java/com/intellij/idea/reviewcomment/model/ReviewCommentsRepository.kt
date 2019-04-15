@@ -4,8 +4,6 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 typealias ProjectComments = MutableMap<VirtualFile, SortedSet<Comment>>
 
@@ -13,7 +11,7 @@ class ReviewCommentsRepository {
 
     var currentUser:String = "n/a"
 
-    private var commentsPerProject: MutableMap<Project, ProjectComments> = HashMap()
+    private var commentsPerProject: MutableMap<Project, ProjectComments> = mutableMapOf()
 
     private fun comments(project: Project) = commentsPerProject.getOrPut(project) { ConcurrentHashMap() }
 
@@ -21,7 +19,7 @@ class ReviewCommentsRepository {
         val extensions = ReviewCommentsProvider.EP_NAME.extensions
         if (extensions.isEmpty()) return
 
-        val allComments = ArrayList<Comment>()
+        val allComments = mutableListOf<Comment>()
         for (provider in extensions) {
             // TODO: in fact user has to be split out of repo, or provided as parameter
             currentUser = provider.getCurrentUser()

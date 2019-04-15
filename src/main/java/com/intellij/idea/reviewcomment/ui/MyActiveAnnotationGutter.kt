@@ -18,8 +18,6 @@ import org.jetbrains.coverage.gnu.trove.TIntObjectHashMap
 import java.awt.Color
 import java.awt.Cursor
 
-import java.util.ArrayList
-
 internal class MyActiveAnnotationGutter(private val myProject: Project,
                                         private val myCommentsRepo: ReviewCommentsRepository,
                                         private val myFile: VirtualFile,
@@ -39,7 +37,7 @@ internal class MyActiveAnnotationGutter(private val myProject: Project,
         for (comment in comments) {
             var list: MutableList<Comment>? = map.get(comment.line)
             if (list == null) {
-                list = ArrayList()
+                list = mutableListOf()
                 map.put(comment.line, list)
             }
             list.add(comment)
@@ -131,7 +129,7 @@ internal class MyActiveAnnotationGutter(private val myProject: Project,
     override fun getPopupActions(line: Int, editor: Editor): List<AnAction> {
         val comments = getComments(line)
 
-        val actions = ArrayList<AnAction>()
+        val actions = mutableListOf<AnAction>()
         run {
             val leaveCommentTxt = "leave a review comment"
             val action = object : AnAction(leaveCommentTxt, leaveCommentTxt, AllIcons.General.Add) {

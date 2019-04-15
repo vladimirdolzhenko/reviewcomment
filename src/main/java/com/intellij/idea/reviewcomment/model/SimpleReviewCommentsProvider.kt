@@ -9,7 +9,7 @@ import java.util.*
 
 
 class SimpleReviewCommentsProvider: ReviewCommentsProvider {
-    private var comments:MutableMap<String, SortedSet<Comment>> = HashMap()
+    private var comments:MutableMap<String, SortedSet<Comment>> = mutableMapOf()
 
     override fun getCurrentUser(): String {
         return "me"
