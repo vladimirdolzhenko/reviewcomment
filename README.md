@@ -29,9 +29,12 @@ Review comments notifier:
 To get review comments project has to have VCS enabled. To enable review comment
 you need to click on a gutter (to the left of editor) and turn them on:
 
-![](https://raw.githubusercontent.com/vladimirdolzhenko/reviewcomment/master/images/new_comment_editor.png?raw=true)
+![](https://raw.githubusercontent.com/vladimirdolzhenko/reviewcomment/master/images/enable_review_comments?raw=true)
 
 After that you can click on gutter and new comment editor will be opened :
+![](https://raw.githubusercontent.com/vladimirdolzhenko/reviewcomment/master/images/new_comment_editor.png?raw=true)
+
+Or edit existed
 ![](https://raw.githubusercontent.com/vladimirdolzhenko/reviewcomment/master/images/comment_editor.png?raw=true)
 
 Another way to add a new comment is to use pop-up menu that appears on a right
