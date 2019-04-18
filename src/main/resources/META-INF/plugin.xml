@@ -20,6 +20,9 @@
     <extensions defaultExtensionNs="com.intellij">
         <idea.reviewcomment.model.ReviewCommentsProvider
             implementation="com.intellij.idea.reviewcomment.model.SimpleReviewCommentsProvider"/>
+        <idea.reviewcomment.model.ReviewCommentsProvider
+                implementation="com.intellij.idea.reviewcomment.model.InMemoryReviewCommentsProvider"/>
+
         <idea.reviewcomment.model.ReviewCommentNotifier
                 implementation="com.intellij.idea.reviewcomment.model.SimpleReviewCommentNotifier"/>
     </extensions>

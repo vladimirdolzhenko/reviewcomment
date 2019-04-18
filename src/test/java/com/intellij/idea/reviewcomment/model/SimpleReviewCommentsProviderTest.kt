@@ -14,7 +14,7 @@ import org.mockito.Mockito.mock
 import java.io.File
 import java.time.Instant
 import kotlin.test.assertEquals
-import kotlin.test.assertNull
+import kotlin.test.assertTrue
 
 @RunWith(JUnit4::class)
 class SimpleReviewCommentsProviderTest {
@@ -59,7 +59,7 @@ class SimpleReviewCommentsProviderTest {
 
         val someFile = populateRoot(projectRootFile, "src/java/q/A.java")
         val comments = provider.getComments(project, someFile)
-        assertNull(comments)
+        assertTrue { comments.isEmpty() }
     }
 
     @Test
@@ -90,7 +90,8 @@ class SimpleReviewCommentsProviderTest {
         projectRootFile = MockVirtualFile(tempDir!!.absolutePath)
         populateWorkspaceFile()
 
-        val comment = Comment("3414123", 10, listOf(Note(Instant.now(), "vd", "a simple comment")))
+        val comment = Comment(provider, "3414123", 10,
+                listOf(Note(Instant.now(), "vd", "a simple comment")))
 
         val someFile = populateRoot(projectRootFile, "src/main/java/com/Foo.java")
         provider.updateComment(project, someFile, null, comment){}
@@ -102,7 +103,10 @@ class SimpleReviewCommentsProviderTest {
         assertEquals(1, comments?.size)
 
         val firstComment = comments?.first()
-        assertEquals(comment, firstComment)
+        assertEquals(comment.revision, firstComment.revision)
+        assertEquals(comment.line, firstComment.line)
+        assertEquals(comment.notes, firstComment.notes)
+        assertEquals(comment.resolved, firstComment.resolved)
     }
 
 }

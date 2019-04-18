@@ -9,20 +9,16 @@ typealias ProjectComments = MutableMap<VirtualFile, SortedSet<Comment>>
 
 class ReviewCommentsRepository {
 
-    var currentUser:String = "n/a"
-
     private var commentsPerProject: MutableMap<Project, ProjectComments> = mutableMapOf()
 
     private fun comments(project: Project) = commentsPerProject.getOrPut(project) { ConcurrentHashMap() }
 
     fun refresh(project: Project, file: VirtualFile) {
-        val extensions = ReviewCommentsProvider.EP_NAME.extensions
-        if (extensions.isEmpty()) return
+        val providers = ReviewCommentsProvider.EP_NAME.extensions
+        if (providers.isEmpty()) return
 
         val allComments = mutableListOf<Comment>()
-        for (provider in extensions) {
-            // TODO: in fact user has to be split out of repo, or provided as parameter
-            currentUser = provider.getCurrentUser()
+        for (provider in providers) {
             val comments: Collection<Comment> = provider.getComments(project, file)
             allComments.addAll(comments)
         }
@@ -32,7 +28,7 @@ class ReviewCommentsRepository {
     }
 
     fun getUnresolvedComments(project: Project, file: VirtualFile) = comments(project)[file]
-                ?.filter { !it.resolved && !it.notes.isEmpty() }
+                ?.filter { !it.resolved && it.notes.isNotEmpty() }
                 ?.toSortedSet()
 
     fun updateComment(project: Project,

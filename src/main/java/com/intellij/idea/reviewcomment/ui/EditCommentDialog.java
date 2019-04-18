@@ -2,11 +2,9 @@ package com.intellij.idea.reviewcomment.ui;
 
 import javax.swing.*;
 
-import java.time.Instant;
-
 import com.intellij.idea.reviewcomment.model.Comment;
 import com.intellij.idea.reviewcomment.model.Note;
-import com.intellij.idea.reviewcomment.model.ReviewCommentsRepository;
+import com.intellij.idea.reviewcomment.model.ReviewCommentsProvider;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.util.Consumer;
@@ -19,22 +17,18 @@ public class EditCommentDialog extends DialogWrapper {
     private final Note myNote;
 
     public EditCommentDialog(@NotNull Project project,
-                             @NotNull ReviewCommentsRepository repository,
                              @NotNull Consumer<Comment> consumer,
                              @NotNull Comment comment,
                              @NotNull Note note) {
         super(project, true);
-        myPanel = new EditCommentPanel(project, repository);
+        final ReviewCommentsProvider[] providers = ReviewCommentsProvider.Companion.getEP_NAME().getExtensions();
+        myPanel = new EditCommentPanel(project, providers);
         myNote = note;
-        myConsumer = c -> {
-            consumer.consume(c);
-        };
+        myConsumer = c -> consumer.consume(c);
         myComment = comment;
-        myPanel.setNote(note);
-        final boolean sameUser = repository.getCurrentUser().equals(note.getAuthor());
-        setTitle(sameUser
-                ? note.isNew() ? "Add a review comment" : "Edit a review comment "
-                : "View a review comment");
+        myPanel.setNote(comment, note);
+        setTitle(note.isNew() ? "Add a review comment" : "Edit a review comment ");
+        setOKActionEnabled(providers.length > 0);
         init();
     }
 
@@ -45,10 +39,10 @@ public class EditCommentDialog extends DialogWrapper {
 
     @Override
     protected void doOKAction() {
-        final String commentText = myPanel.getComment();
-        final Instant timestamp = myNote.getTimestamp() != null ? myNote.getTimestamp() : Instant.now();
-        final Note note = new Note(timestamp, myNote.getAuthor(), commentText);
-        final Comment comment = myComment.toUpdated(myNote, note);
+        final Note note = myPanel.getNote();
+        final Comment comment =
+                (myComment.getProvider() == null ? myComment.withProvider(myPanel.getSelectedProvider()) : myComment )
+                    .toUpdated(myNote, note);
         myConsumer.consume(comment);
         super.doOKAction();
     }

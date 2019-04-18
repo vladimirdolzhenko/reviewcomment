@@ -47,23 +47,23 @@ internal class MyActiveAnnotationGutter(private val myProject: Project,
         // TODO: how to fire gutter to be updated?
     }
 
-    override fun doAction(lineNum: Int) = openDialog(lineNum, false)
+    override fun doAction(lineNum: Int) = openDialog(lineNum)
 
-    private fun openDialog(lineNum: Int, forceNew: Boolean) {
+    private fun openDialog(lineNum: Int, forceNew: Boolean = false) {
         val comments = getComments(lineNum)
         val numberOfNotes = getNumberOfNotes(comments)
 
         val note: Note
         val comment: Comment
         if (numberOfNotes == 0 || forceNew) {
-            note = Note(null, myCommentsRepo.currentUser, "")
-            comment = if (forceNew && comments != null)
+            note = Note()
+            comment = if (forceNew && comments.isNotEmpty())
                 comments[0]
             else
-                Comment(myVcsRevisionNumber.asString(), lineNum, emptyList(), false)
+                Comment(revision = myVcsRevisionNumber.asString(), line = lineNum)
         } else {
             // pick up last note of last comment for this line
-            comment = comments!![comments.size - 1]
+            comment = comments[comments.size - 1]
             val notes = comment.notes
             note = notes[notes.size - 1]
         }
@@ -72,15 +72,15 @@ internal class MyActiveAnnotationGutter(private val myProject: Project,
     }
 
     private fun openDialog(virtualFile: VirtualFile, comment: Comment, note: Note) {
-        val dialog = EditCommentDialog(myProject, myCommentsRepo,
+        val dialog = EditCommentDialog(myProject,
                 { newComment -> myCommentsRepo.updateComment(myProject, virtualFile, comment, newComment)
-                    { fetchComments() }
-                }, comment, note)
+                    { fetchComments() } },
+                comment, note)
         dialog.show()
     }
 
-    private fun getNumberOfNotes(comments: List<Comment>?): Int
-        = comments?.stream()?.mapToInt { (_, _, notes) -> notes.size }?.sum() ?: 0
+    private fun getNumberOfNotes(comments: List<Comment>): Int
+        = comments.stream().mapToInt { c -> c.notes.size }.sum()
 
     override fun getCursor(lineNum: Int): Cursor
         = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)
@@ -95,7 +95,10 @@ internal class MyActiveAnnotationGutter(private val myProject: Project,
     }
 
     override fun getToolTip(line: Int, editor: Editor): String? {
-        val comments = getComments(line) ?: return "leave a review comment"
+        val comments = getComments(line)
+
+        if (comments.isEmpty()) return "leave a review comment"
+
         val numberOfNotes = getNumberOfNotes(comments)
 
         if (numberOfNotes < 5) {
@@ -116,9 +119,9 @@ internal class MyActiveAnnotationGutter(private val myProject: Project,
         return "$numberOfNotes review comments"
     }
 
-    private fun getComments(line: Int): List<Comment>? = myComments?.get(line) ?: null
+    private fun getComments(line: Int): List<Comment> = myComments?.get(line) ?: emptyList()
 
-    private fun isCommented(line: Int): Boolean = getComments(line) != null
+    private fun isCommented(line: Int): Boolean = getComments(line).isNotEmpty()
 
     override fun getStyle(line: Int, editor: Editor): EditorFontType? = null
 
@@ -139,7 +142,7 @@ internal class MyActiveAnnotationGutter(private val myProject: Project,
             }
             actions.add(action)
         }
-        if (comments == null) {
+        if (comments.isEmpty()) {
             return actions
         }
 

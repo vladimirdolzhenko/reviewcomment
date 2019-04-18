@@ -9,7 +9,10 @@ interface ReviewCommentsProvider {
     companion object {
         val EP_NAME =
                 ExtensionPointName.create<ReviewCommentsProvider>("com.intellij.idea.reviewcomment.model.ReviewCommentsProvider")
+
     }
+
+    fun getName(): String
 
     fun getCurrentUser(): String
 
