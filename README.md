@@ -26,12 +26,9 @@ Review comments notifier:
 
 ## Overview
 
-To get review comments project has to have VCS enabled. To enable review comment
-you need to click on a gutter (to the left of editor) and turn them on:
+To get review comments project has to have VCS enabled. 
 
-![](https://raw.githubusercontent.com/vladimirdolzhenko/reviewcomment/master/images/enable_review_comments?raw=true)
-
-After that you can click on gutter and new comment editor will be opened :
+You can click on gutter and new comment editor will be opened :
 ![](https://raw.githubusercontent.com/vladimirdolzhenko/reviewcomment/master/images/new_comment_editor.png?raw=true)
 
 Or edit existed
@@ -48,7 +45,7 @@ _Note_: a single comment appears as `!!` while multiple comments are shown as `!
 
 ## Known issues
 
-* (*TBD*) No aggregation on comments for previous revisions
+* (*TBD*) No aggregation on comments for previous revisions 
 * When _review comments_ gutter is opened it is shown that _Annotate_ is **on** (see [AnnotateVcsVirtualFileAction](https://github.com/JetBrains/intellij-community/blob/191.6707/platform/vcs-impl/src/com/intellij/openapi/vcs/actions/AnnotateVcsVirtualFileAction.java#L82))
 * It is not clear how to handle abandoned comments (line has been commented but dropped during further development)
-* It is not available (so far) to have review comments gutter turned on for all files
+* (*TBD*) No setting to turn off/on (always on) review comments 

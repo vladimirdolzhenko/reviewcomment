@@ -17,7 +17,10 @@
                         interface="com.intellij.idea.reviewcomment.model.ReviewCommentNotifier"/>
     </extensionPoints>
 
+
     <extensions defaultExtensionNs="com.intellij">
+        <postStartupActivity implementation="com.intellij.idea.reviewcomment.ui.ReviewCommentsActivity"/>
+
         <idea.reviewcomment.model.ReviewCommentsProvider
             implementation="com.intellij.idea.reviewcomment.model.SimpleReviewCommentsProvider"/>
         <idea.reviewcomment.model.ReviewCommentsProvider
@@ -28,14 +31,5 @@
     </extensions>
 
     <actions>
-        <group id="ReviewCommentsPlugin.GutterMenu">
-            <separator/>
-            <action id="CommentsAction"
-                    class="com.intellij.idea.reviewcomment.ui.ReviewCommentsAction"
-                    text="Enable review comments"
-                    description="Perform code review">
-                <add-to-group group-id="EditorGutterPopupMenu" anchor="last"/>
-            </action>
-        </group>
     </actions>
 </idea-plugin>

@@ -3,17 +3,12 @@ package com.intellij.idea.reviewcomment.model
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import java.util.*
-import java.util.concurrent.ConcurrentHashMap
 
-typealias ProjectComments = MutableMap<VirtualFile, SortedSet<Comment>>
+class ReviewCommentsRepository(private val project: Project) {
 
-class ReviewCommentsRepository {
+    private var comments: MutableMap<VirtualFile, SortedSet<Comment>> = mutableMapOf()
 
-    private var commentsPerProject: MutableMap<Project, ProjectComments> = mutableMapOf()
-
-    private fun comments(project: Project) = commentsPerProject.getOrPut(project) { ConcurrentHashMap() }
-
-    fun refresh(project: Project, file: VirtualFile) {
+    fun refresh(file: VirtualFile) {
         val providers = ReviewCommentsProvider.EP_NAME.extensions
         if (providers.isEmpty()) return
 
@@ -24,19 +19,18 @@ class ReviewCommentsRepository {
         }
 
         val values = allComments.toSortedSet()
-        comments(project)[file] = values
+        comments[file] = values
     }
 
-    fun getUnresolvedComments(project: Project, file: VirtualFile) = comments(project)[file]
+    fun getUnresolvedComments(file: VirtualFile) = comments[file]
                 ?.filter { !it.resolved && it.notes.isNotEmpty() }
-                ?.toSortedSet()
+                ?.toSortedSet() ?: emptySet<Comment>()
 
-    fun updateComment(project: Project,
-                      file: VirtualFile,
+    fun updateComment(file: VirtualFile,
                       oldComment: Comment?,
                       comment: Comment,
                       onUpdateConsumer: (Any) -> Unit) {
-        val set = comments(project).getOrPut(file) { TreeSet() }
+        val set = comments.getOrPut(file) { TreeSet() }
         oldComment?.let { set.remove(it) }
         set.add(comment)
         for (provider in ReviewCommentsProvider.EP_NAME.extensions) {
@@ -46,5 +40,9 @@ class ReviewCommentsRepository {
         for (notifier in ReviewCommentNotifier.EP_NAME.extensions) {
             notifier.newComment(file, comment)
         }
+    }
+
+    fun close(file:VirtualFile) {
+        comments.remove(file)
     }
 }

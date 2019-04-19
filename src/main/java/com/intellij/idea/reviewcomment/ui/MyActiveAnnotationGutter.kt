@@ -29,9 +29,9 @@ internal class MyActiveAnnotationGutter(private val myProject: Project,
     }
 
     private fun fetchComments() {
-        val comments = myCommentsRepo.getUnresolvedComments(myProject, myFile)
+        val comments = myCommentsRepo.getUnresolvedComments(myFile)
 
-        if (comments.isNullOrEmpty()) return
+        if (comments.isEmpty()) return
 
         val map = TIntObjectHashMap<MutableList<Comment>>()
         for (comment in comments) {
@@ -73,7 +73,7 @@ internal class MyActiveAnnotationGutter(private val myProject: Project,
 
     private fun openDialog(virtualFile: VirtualFile, comment: Comment, note: Note) {
         val dialog = EditCommentDialog(myProject,
-                { newComment -> myCommentsRepo.updateComment(myProject, virtualFile, comment, newComment)
+                { newComment -> myCommentsRepo.updateComment(virtualFile, comment, newComment)
                     { fetchComments() } },
                 comment, note)
         dialog.show()
@@ -159,7 +159,7 @@ internal class MyActiveAnnotationGutter(private val myProject: Project,
             val resolveCommentTxt = "resolve comment"
             val action = object : AnAction(resolveCommentTxt, resolveCommentTxt, AllIcons.Actions.Cancel) {
                 override fun actionPerformed(e: AnActionEvent) {
-                    myCommentsRepo.updateComment(myProject, myFile, comment, comment.toResolved())
+                    myCommentsRepo.updateComment(myFile, comment, comment.toResolved())
                         { fetchComments() }
                 }
             }
