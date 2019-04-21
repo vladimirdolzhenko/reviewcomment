@@ -29,22 +29,32 @@ Review comments notifier:
 To get review comments project has to have VCS enabled.
 
 You can comment multiple lines (a just single line) with a right click on the line :
+
 ![](https://raw.githubusercontent.com/vladimirdolzhenko/reviewcomment/master/images/popup.png?raw=true)
 
-Select a review source (if there are multiple)
+
+Select a review source (if there are multiple):
+
 ![](https://raw.githubusercontent.com/vladimirdolzhenko/reviewcomment/master/images/new_comment_editor.png?raw=true)
 
-Or edit existed
+
+Or edit existed:
+
 ![](https://raw.githubusercontent.com/vladimirdolzhenko/reviewcomment/master/images/comment_editor.png?raw=true)
 
 Quick comments overview:
+
 ![](https://raw.githubusercontent.com/vladimirdolzhenko/reviewcomment/master/images/tooltip.png?raw=true)
 
 Or open comments for edit/view via popup menu:
+
 ![](https://raw.githubusercontent.com/vladimirdolzhenko/reviewcomment/master/images/comments_popup.png?raw=true)
 
+
 There is a highlight for multiline comment. Comment that has more than one note looks a bit different to a single note comment:
+
 ![](https://raw.githubusercontent.com/vladimirdolzhenko/reviewcomment/master/images/review_gutter_icons.png?raw=true)
+
 
 ## Known issues
 
