@@ -57,7 +57,7 @@ public class EditCommentPanel extends JPanel {
     gb.weightx = 0;
     gb.fill = GridBagConstraints.NONE;
 
-    final JLabel providerLabel = new JLabel("Provider:");
+    final JLabel providerLabel = new JLabel("Review source:");
     add(providerLabel, gb);
     ++ gb.gridx;
     gb.weightx = 1;

@@ -44,11 +44,13 @@ data class Comment(
         val provider: ReviewCommentsProvider? = null,
         val revision: String,
         val line:Int,
+        val numberOfLines: Int = 1,
         val notes:List<Note> = emptyList(),
         val resolved:Boolean = false): Comparable<Comment> {
 
     fun withProvider(provider: ReviewCommentsProvider):Comment {
-        return Comment(provider, revision, line, notes, resolved)
+        return Comment(provider = provider, revision = revision,
+                line = line, numberOfLines = numberOfLines, notes = notes, resolved = resolved)
     }
 
     fun toUpdated(oldNote: Note, note:Note):Comment {
@@ -59,13 +61,15 @@ data class Comment(
         newNotes.add(note)
         newNotes.sortWith(noteComparator)
 
-        return Comment(provider, revision, line, newNotes, resolved)
+        return Comment(provider = provider, revision = revision,
+                line = line, numberOfLines = numberOfLines, notes = newNotes, resolved = resolved)
     }
 
     fun toResolved(): Comment {
         checkIfResolved()
 
-        return Comment(provider, revision, line, notes, true)
+        return Comment(provider = provider, revision = revision,
+                line = line, numberOfLines = numberOfLines, notes = notes, resolved = true)
     }
 
     private fun checkIfResolved() {
@@ -73,7 +77,10 @@ data class Comment(
     }
 
     override fun compareTo(other: Comment): Int {
-        val cmp = Integer.compare(line, other.line)
+        var cmp = Integer.compare(line, other.line)
+        if (cmp != 0) return cmp
+
+        cmp = Integer.compare(numberOfLines, other.numberOfLines)
         if (cmp != 0) return cmp
 
         if (notes.isEmpty() || other.notes.isEmpty())

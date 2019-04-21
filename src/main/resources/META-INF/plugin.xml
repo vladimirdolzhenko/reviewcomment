@@ -19,7 +19,10 @@
 
 
     <extensions defaultExtensionNs="com.intellij">
-        <postStartupActivity implementation="com.intellij.idea.reviewcomment.ui.ReviewCommentsActivity"/>
+        <postStartupActivity implementation="com.intellij.idea.reviewcomment.ui.ReviewCommentsHighlighter"/>
+
+        <projectService serviceInterface="com.intellij.idea.reviewcomment.model.ReviewCommentsManager"
+                        serviceImplementation="com.intellij.idea.reviewcomment.model.DefaultReviewCommentsManager"/>
 
         <idea.reviewcomment.model.ReviewCommentsProvider
             implementation="com.intellij.idea.reviewcomment.model.SimpleReviewCommentsProvider"/>
@@ -31,5 +34,13 @@
     </extensions>
 
     <actions>
+        <group id="ReviewCommentsPlugin.GutterMenu">
+<!--            <add-to-group group-id="EditorGutterPopupMenu" anchor="last"/>-->
+            <add-to-group group-id="EditorPopupMenu"/>
+            <separator/>
+            <action id="CommentsAction"
+                    class="com.intellij.idea.reviewcomment.ui.AddReviewCommentsAction"/>
+        </group>
     </actions>
+
 </idea-plugin>

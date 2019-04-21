@@ -4,6 +4,7 @@
         "demos/src/main/java/com/ObjectMemoryDump.java": [
             {
                 "line": 16,
+                "numberOfLines":1,
                 "notes": [
                     {
                         "author": "me",
@@ -21,6 +22,7 @@
         "demos/src/main/java/com/ObjectReallocation.java": [
             {
                 "line": 24,
+                "numberOfLines":1,
                 "notes": [
                     {
                         "author": "me",
@@ -44,6 +46,7 @@
             },
             {
                 "line": 30,
+                "numberOfLines":1,
                 "notes": [
                     {
                         "author": "me",

@@ -26,26 +26,29 @@ Review comments notifier:
 
 ## Overview
 
-To get review comments project has to have VCS enabled. 
+To get review comments project has to have VCS enabled.
 
-You can click on gutter and new comment editor will be opened :
+You can comment multiple lines (a just single line) with a right click on the line :
+![](https://raw.githubusercontent.com/vladimirdolzhenko/reviewcomment/master/images/popup.png?raw=true)
+
+Select a review source (if there are multiple)
 ![](https://raw.githubusercontent.com/vladimirdolzhenko/reviewcomment/master/images/new_comment_editor.png?raw=true)
 
 Or edit existed
 ![](https://raw.githubusercontent.com/vladimirdolzhenko/reviewcomment/master/images/comment_editor.png?raw=true)
 
-Another way to add a new comment is to use pop-up menu that appears on a right
-click (menu has also shows existed comment notes):
-
-![](https://raw.githubusercontent.com/vladimirdolzhenko/reviewcomment/master/images/popup.png?raw=true)
-
-_Note_: a single comment appears as `!!` while multiple comments are shown as `!!!`
-
+Quick comments overview:
 ![](https://raw.githubusercontent.com/vladimirdolzhenko/reviewcomment/master/images/tooltip.png?raw=true)
+
+Or open comments for edit/view via popup menu:
+![](https://raw.githubusercontent.com/vladimirdolzhenko/reviewcomment/master/images/comments_popup.png?raw=true)
+
+There is a highlight for multiline comment. Comment that has more than one note looks a bit different to a single note comment:
+![](https://raw.githubusercontent.com/vladimirdolzhenko/reviewcomment/master/images/review_gutter_icons.png?raw=true)
 
 ## Known issues
 
-* (*TBD*) No aggregation on comments for previous revisions 
-* When _review comments_ gutter is opened it is shown that _Annotate_ is **on** (see [AnnotateVcsVirtualFileAction](https://github.com/JetBrains/intellij-community/blob/191.6707/platform/vcs-impl/src/com/intellij/openapi/vcs/actions/AnnotateVcsVirtualFileAction.java#L82))
+* non VCS files lead to mislead error message
+* (*TBD*) No aggregation on comments for previous revisions
+* (*TBD*) No setting to turn off/on (always on) review comments
 * It is not clear how to handle abandoned comments (line has been commented but dropped during further development)
-* (*TBD*) No setting to turn off/on (always on) review comments 

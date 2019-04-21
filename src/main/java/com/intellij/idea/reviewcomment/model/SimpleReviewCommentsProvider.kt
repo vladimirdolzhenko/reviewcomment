@@ -9,9 +9,11 @@ import java.util.*
 
 private data class ProviderComment(val revision: String,
                                    val line:Int,
+                                   val numberOfLines: Int,
                                    val notes:List<Note>,
                                    val resolved:Boolean) : Comparable<ProviderComment> {
-    fun toComment(provider: ReviewCommentsProvider) = Comment(provider, revision, line, notes, resolved)
+    fun toComment(provider: ReviewCommentsProvider) = Comment(provider = provider,
+            revision = revision, line = line, numberOfLines = numberOfLines, notes = notes, resolved = resolved)
 
     override fun compareTo(other: ProviderComment): Int {
         val cmp = Integer.compare(line, other.line)
@@ -85,7 +87,8 @@ class SimpleReviewCommentsProvider: ReviewCommentsProvider {
     }
 
     private fun toProviderComment(comment: Comment)
-            = ProviderComment(comment.revision, comment.line, comment.notes, comment.resolved)
+            = ProviderComment(revision = comment.revision, line = comment.line, numberOfLines = comment.numberOfLines,
+                notes = comment.notes, resolved = comment.resolved)
 
     override fun updateComment(project: Project,
                                file: VirtualFile,

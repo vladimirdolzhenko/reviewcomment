@@ -70,18 +70,18 @@ class SimpleReviewCommentsProviderTest {
 
         val someFile = populateRoot(projectRootFile, "demos/src/main/java/com/ObjectReallocation.java")
         val comments = provider.getComments(project, someFile)
-        assertEquals(2, comments?.size)
+        assertEquals(2, comments.size)
 
-        val firstComment = comments?.first()
-        assertEquals(24, firstComment?.line)
-        assertEquals(2, firstComment?.notes?.size)
-        assertEquals("xxx", firstComment?.notes?.get(0)?.comment)
-        assertEquals("xxx2", firstComment?.notes?.get(1)?.comment)
+        val firstComment = comments.first()
+        assertEquals(24, firstComment.line)
+        assertEquals(2, firstComment.notes.size)
+        assertEquals("xxx", firstComment.notes[0].comment)
+        assertEquals("xxx2", firstComment.notes[1].comment)
 
-        val lastComment = comments?.last()
-        assertEquals(30, lastComment?.line)
-        assertEquals(1, lastComment?.notes?.size)
-        assertEquals("wtf", lastComment?.notes?.get(0)?.comment)
+        val lastComment = comments.last()
+        assertEquals(30, lastComment.line)
+        assertEquals(1, lastComment.notes.size)
+        assertEquals("wtf", lastComment.notes[0].comment)
     }
 
     @Test
@@ -90,8 +90,8 @@ class SimpleReviewCommentsProviderTest {
         projectRootFile = MockVirtualFile(tempDir!!.absolutePath)
         populateWorkspaceFile()
 
-        val comment = Comment(provider, "3414123", 10,
-                listOf(Note(Instant.now(), "vd", "a simple comment")))
+        val comment = Comment(provider = provider, revision = "3414123", line = 10, numberOfLines = 1,
+                notes = listOf(Note(Instant.now(), "vd", "a simple comment")))
 
         val someFile = populateRoot(projectRootFile, "src/main/java/com/Foo.java")
         provider.updateComment(project, someFile, null, comment){}
@@ -100,9 +100,9 @@ class SimpleReviewCommentsProviderTest {
         val provider2 = SimpleReviewCommentsProvider()
 
         val comments = provider2.getComments(project, someFile)
-        assertEquals(1, comments?.size)
+        assertEquals(1, comments.size)
 
-        val firstComment = comments?.first()
+        val firstComment = comments.first()
         assertEquals(comment.revision, firstComment.revision)
         assertEquals(comment.line, firstComment.line)
         assertEquals(comment.notes, firstComment.notes)
