@@ -33,6 +33,11 @@ class AddReviewCommentsAction:
             val lineNumberEnd = document.getLineNumber(selectionEnd)
             val rangeChanged = upToDateLineNumbers.isRangeChanged(start = lineNumStart, end = lineNumberEnd)
             enabled = !rangeChanged
+
+            e.presentation.text = when (selectionStart == selectionEnd) {
+                true -> "Add a review comment"
+                else -> "Add a review comment for several lines"
+            }
         }
 
         e.presentation.isEnabled = enabled
