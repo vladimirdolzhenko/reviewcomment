@@ -21,7 +21,7 @@ class ReviewCommentsRepository(private val project: Project) {
 
         val allComments = mutableListOf<Comment>()
         for (provider in providers) {
-            val comments: Collection<Comment> = provider.getComments(project, file)
+            val comments = provider.getComments(project, file)
             allComments.addAll(comments)
         }
 

@@ -34,6 +34,7 @@ val noteComparator = object : Comparator<Note> {
             else -> a.timestamp!!.compareTo(b.timestamp)
         }
         return when (cmp) {
+            // b.author == null when cmp == 0 and a.author == null (see checks in init)
             0 -> a.author?.compareTo(b.author!!) ?: 0
             else -> cmp
         }
@@ -49,30 +50,29 @@ data class Comment(
         val resolved:Boolean = false): Comparable<Comment> {
 
     fun withProvider(provider: ReviewCommentsProvider):Comment {
-        return Comment(provider = provider, revision = revision,
-                line = line, numberOfLines = numberOfLines, notes = notes, resolved = resolved)
+        checkNotResolved()
+
+        return this.copy(provider = provider)
     }
 
     fun toUpdated(oldNote: Note, note:Note):Comment {
-        checkIfResolved()
+        checkNotResolved()
 
         val newNotes = notes.toMutableList()
         newNotes.remove(oldNote)
         newNotes.add(note)
         newNotes.sortWith(noteComparator)
 
-        return Comment(provider = provider, revision = revision,
-                line = line, numberOfLines = numberOfLines, notes = newNotes, resolved = resolved)
+        return this.copy(notes = newNotes)
     }
 
     fun toResolved(): Comment {
-        checkIfResolved()
+        checkNotResolved()
 
-        return Comment(provider = provider, revision = revision,
-                line = line, numberOfLines = numberOfLines, notes = notes, resolved = true)
+        return this.copy(resolved = true)
     }
 
-    private fun checkIfResolved() {
+    private fun checkNotResolved() {
         resolved && throw IllegalStateException("Comment $this is already resolved")
     }
 

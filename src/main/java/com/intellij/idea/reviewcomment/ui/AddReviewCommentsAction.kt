@@ -14,10 +14,10 @@ class AddReviewCommentsAction:
         DumbAwareAction("Add a review comment", "Add a review comment", Icons.Actions.COMMENT) {
 
     override fun update(e: AnActionEvent) {
-        val project = e.getData(CommonDataKeys.PROJECT) ?: return
-        val virtualFile = e.getData(CommonDataKeys.VIRTUAL_FILE) ?: return
-        val editor = e.getData(CommonDataKeys.EDITOR) ?: return
-        val psiFile = e.getData(CommonDataKeys.PSI_FILE) ?: return
+        val project = e.getRequiredData(CommonDataKeys.PROJECT)
+        val virtualFile = e.getRequiredData(CommonDataKeys.VIRTUAL_FILE)
+        val editor = e.getRequiredData(CommonDataKeys.EDITOR)
+        val psiFile = e.getRequiredData(CommonDataKeys.PSI_FILE)
         val document = PsiDocumentManager.getInstance(project).getDocument(psiFile) ?: return
 
         e.presentation.isVisible = AbstractVcs.fileInVcsByFileStatus(project, virtualFile)
@@ -39,10 +39,10 @@ class AddReviewCommentsAction:
     }
 
     override fun actionPerformed(e: AnActionEvent) {
-        val project = e.getData(CommonDataKeys.PROJECT) ?: return
-        val psiFile = e.getData(CommonDataKeys.PSI_FILE) ?: return
-        val virtualFile = e.getData(CommonDataKeys.VIRTUAL_FILE) ?: return
-        val editor = e.getData(CommonDataKeys.EDITOR) ?: return
+        val project = e.getRequiredData(CommonDataKeys.PROJECT)
+        val psiFile = e.getRequiredData(CommonDataKeys.PSI_FILE)
+        val virtualFile = e.getRequiredData(CommonDataKeys.VIRTUAL_FILE)
+        val editor = e.getRequiredData(CommonDataKeys.EDITOR)
         val document = PsiDocumentManager.getInstance(project).getDocument(psiFile) ?: return
         val selectionStart = editor.selectionModel.selectionStart
         val selectionEnd = editor.selectionModel.selectionEnd

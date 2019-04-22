@@ -29,8 +29,20 @@ class CommentTest {
     }
 
     @Test
+    fun commentCompare() {
+        val initialComment1 = Comment(revision = "rev1", line = 5,
+                notes = listOf(Note(comment = "a"), Note(comment = "a")))
+
+        val initialComment2 = Comment(revision = "rev2", line = 5,
+                notes = listOf(Note(comment = "a"), Note(comment = "a")))
+
+        assertEquals(0, initialComment1.compareTo(initialComment2))
+        assertEquals(0, initialComment2.compareTo(initialComment1))
+    }
+
+    @Test
     fun simple() {
-        val initialComment = Comment(revision = "rev1", line = 5, notes = listOf())
+        val initialComment = Comment(revision = "rev1", line = 5)
 
         assertEquals(0, initialComment.notes.size)
         assertEquals(false, initialComment.resolved)
