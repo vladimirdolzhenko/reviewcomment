@@ -35,7 +35,6 @@
 
     <actions>
         <group id="ReviewCommentsPlugin.GutterMenu">
-<!--            <add-to-group group-id="EditorGutterPopupMenu" anchor="last"/>-->
             <add-to-group group-id="EditorPopupMenu"/>
             <separator/>
             <action id="CommentsAction"

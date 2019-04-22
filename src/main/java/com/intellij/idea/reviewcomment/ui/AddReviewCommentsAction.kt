@@ -20,7 +20,6 @@ class AddReviewCommentsAction:
         val psiFile = e.getData(CommonDataKeys.PSI_FILE) ?: return
         val document = PsiDocumentManager.getInstance(project).getDocument(psiFile) ?: return
 
-        // TODO: it does not work
         e.presentation.isVisible = AbstractVcs.fileInVcsByFileStatus(project, virtualFile)
 
         val selectionStart = editor.selectionModel.selectionStart

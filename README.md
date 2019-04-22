@@ -58,7 +58,6 @@ There is a highlight for multiline comment. Comment that has more than one note 
 
 ## Known issues
 
-* non VCS files lead to mislead error message
 * (*TBD*) No aggregation on comments for previous revisions
 * (*TBD*) No setting to turn off/on (always on) review comments
 * It is not clear how to handle abandoned comments (line has been commented but dropped during further development)

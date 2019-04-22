@@ -22,7 +22,10 @@ import com.intellij.openapi.ui.MessageType
 import com.intellij.openapi.util.Key
 import com.intellij.openapi.util.Pair
 import com.intellij.openapi.util.Ref
-import com.intellij.openapi.vcs.*
+import com.intellij.openapi.vcs.AbstractVcs
+import com.intellij.openapi.vcs.AbstractVcsHelper
+import com.intellij.openapi.vcs.VcsBundle
+import com.intellij.openapi.vcs.VcsException
 import com.intellij.openapi.vcs.ui.VcsBalloonProblemNotifier
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.util.PsiUtilBase
@@ -85,7 +88,6 @@ class ReviewCommentsHighlighter : StartupActivity {
 
     private fun loadAndShowComments(project: Project, repository:ReviewCommentsRepository,
                                     source: FileEditorManager, virtualFile: VirtualFile) {
-        // TODO: it does not work
         (!AbstractVcs.fileInVcsByFileStatus(project, virtualFile)) && return
 
         // TODO: is feature/setting enabled ?
